@@ -23,26 +23,51 @@ extension Double {
         return  180.0 * self / Double.pi
     }
 }
-
-/// Radius at equator [m]
-private let a: Double = 6378137.0
-/// Flattening of the ellipsoid
-private let f: Double = 1 / 298.257223563
-/// Radius at the poles [m]
-private let b: Double = 6356752.314245
-/// Reduced latitude
-private func u(of latitude: Double) -> Double {
+class Vincentry{
+    let a: Double!
+    let f: Double!
+    let b: Double!
+    var position:CLLocation!
     
-    return atan((1 - f) * tan(latitude))
-}
+    init(position:CLLocation){
+        /// Radius at equator [m]
+        self.a = 6378137.0
+        /// Flattening of the ellipsoid
+          self.f = 1 / 298.257223563
+        /// Radius at the poles [m]
+        self.b = 6356752.314245
+        /// Reduced latitude
+        self.position = position
+      
+    }
+    init(){
+        /// Radius at equator [m]
+        self.a = 6378137.0
+        /// Flattening of the ellipsoid
+        self.f = 1 / 298.257223563
+        /// Radius at the poles [m]
+        self.b = 6356752.314245
+        /// Reduced latitude
+        
+    }
+
+    func u(of latitude: Double) -> Double {
+        
+        return atan((1 - f) * tan(latitude))
+    }
 
 // MARK: - Internal
-
-public func calcurateDistanceAndAzimuths(at location1: CLLocation, and location2: CLLocation) -> (s: Double, a1: Double, a2: Double) {
     
-    let lat1 = location1.coordinate.latitude.radian
+    public func updatePosition(newposition:CLLocation){
+    
+    self.position = newposition
+    }
+    //Vincentyの逆　こっちを使う
+public func calcurateDistanceAndAzimuths( location2: CLLocation) -> (s: Double, a1: Double, a2: Double) {
+    
+    let lat1 = self.position.coordinate.latitude.radian
     let lat2 = location2.coordinate.latitude.radian
-    let lon1 = location1.coordinate.longitude.radian
+    let lon1 = self.position.coordinate.longitude.radian
     let lon2 = location2.coordinate.longitude.radian
     
     let omega = lon2 - lon1
@@ -98,10 +123,10 @@ public func calcurateDistanceAndAzimuths(at location1: CLLocation, and location2
     return (s: s, a1: a1.degree, a2: a2.degree)
 }
 
-public func calcurateNextPointLocation(from location: CLLocation, s: Double, a1: Double) -> (location: CLLocationCoordinate2D, a2: Double) {
+public func calcurateNextPointLocation( s: Double, a1: Double) -> (location: CLLocationCoordinate2D, a2: Double) {
     
-    let latRad = location.coordinate.latitude.radian
-    let lonRad = location.coordinate.longitude.radian
+    let latRad = self.position.coordinate.latitude.radian
+    let lonRad = self.position.coordinate.longitude.radian
     let a1Rad = a1.radian
     
     let u1 = u(of: latRad)
@@ -138,4 +163,6 @@ public func calcurateNextPointLocation(from location: CLLocation, s: Double, a1:
     let longitude = lonRad + dL
     let a2 = atan2(sinalp, cos(u1) * cos(sigma) * cos(a1) - sin(u1) * sin(sigma))
     return (location: CLLocationCoordinate2D(latitude: latitude.degree, longitude: longitude.degree), a2: a2.degree)
+}
+
 }

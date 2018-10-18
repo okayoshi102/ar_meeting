@@ -18,12 +18,12 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Location Demo</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>使うんで</string>
 	<key>NSCameraUsageDescription</key>
-	<string></string>
+	<string>使います</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

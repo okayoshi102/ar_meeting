@@ -11,10 +11,12 @@ import SceneKit
 import ARKit
 import CoreLocation
 
+
 class ViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
     var locationManager: CLLocationManager!
+    let label:UILabel! = UILabel()
    
     //デバック用　名古屋駅の位置情報
     var nagoya_station:CLLocation!
@@ -36,10 +38,23 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         locationManager = CLLocationManager() // インスタンスの生成
         locationManager.delegate = self // CLLocationManagerDelegateプロトコルを実装するクラスを指定する
+        locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+         locationManager.activityType = .fitness
+        locationManager.distanceFilter = 5.0
+        
+    
+        label.text = "ラベルのテキスト"
+        label.center = self.view.center
+        label.numberOfLines = 0
+        label.frame = CGRect(x:150, y:200, width:300, height:400)
+        
+        self.view.addSubview(label)
+        
+        
         
         //デバック用　名古屋駅の位置情報
         
-         nagoya_station = CLLocation(latitude: 35.17171766, longitude: 136.881536)
+         nagoya_station = CLLocation(latitude: 35.157459, longitude: 136.924870)
         
     }
     
@@ -50,13 +65,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let configuration = ARWorldTrackingConfiguration()
         
         // z: North and South, x: East and West, y: parallel to gravity
-        configuration.worldAlignment = .gravityAndHeading
+       configuration.worldAlignment = .gravityAndHeading
         
         // Run the view's session
         sceneView.session.run(configuration)
 
-        // Run the view's session
-        sceneView.session.run(configuration)
+      
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -94,7 +108,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 }
 
 extension ViewController: CLLocationManagerDelegate {
+    
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+       
         switch status {
         case .notDetermined:
             print("ユーザーはこのアプリケーションに関してまだ選択を行っていません")
@@ -121,11 +137,17 @@ extension ViewController: CLLocationManagerDelegate {
         }
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
+        let V:Vincentry = Vincentry()
         for location in locations {
-            
-            let res = calcurateDistanceAndAzimuths(at:location,and: nagoya_station )
-             print("距離:\(res.s) 経度:\(res.a1) 経度:\(res.a2)")
+            V.updatePosition(newposition: location)
+             //print("緯度:\(location.coordinate.latitude) 経度:\(location.coordinate.longitude) 取得時刻:\(location.timestamp.description)")
+           let res = V.calcurateDistanceAndAzimuths(location2: nagoya_station)
+           print("距離:\(res.s) 経度:\(res.a1) 経度:\(res.a2)")
+            label.text = """
+            距離:\(res.s)
+            経度:\(res.a1)
+            経度:\(res.a2)
+            """
             
         }
     }
