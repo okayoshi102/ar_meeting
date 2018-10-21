@@ -1,6 +1,6 @@
 # 待ち合わせARアプリ（アランデブー）
 
-[![アランデブー(ARendezvous)](logo.png)](https://www.youtube.com/watch?v=G5rULR53uMk)
+[![アランデブー(ARendezvous)](logo.png)](https://www.youtube.com/watch?v=HsD1WHpUfnY&feature=youtu.be)
 
 ## 製品概要
 ### 待ち合わせ ×Tech
