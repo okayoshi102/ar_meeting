@@ -66,8 +66,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         //デバック用　名古屋駅の位置情報
         
-//        nagoya_station = CLLocation(latitude: 35.15633909391446, longitude: 136.92472466888248)
-//        V = Vincentry(destination:nagoya_station)
+        //        nagoya_station = CLLocation(latitude: 35.15633909391446, longitude: 136.92472466888248)
+        //        V = Vincentry(destination:nagoya_station)
         
         //        let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate
         //        let lati = Double(appDelegate.latitude!)
@@ -247,26 +247,29 @@ extension ViewController: CLLocationManagerDelegate {
     func directionArrow(Position:SCNVector3)
     {
         arrow = SCNNode(geometry: plane)
-                arrow.eulerAngles = SCNVector3(-90 * (Float.pi / 180), -90 * (Float.pi / 180), 0)
+        arrow.eulerAngles = SCNVector3(-90 * (Float.pi / 180), -90 * (Float.pi / 180), 0)
         let position = SCNVector3(x: 0, y: -0.3, z: -1) // 偏差のベクトルを生成する
         if let camera = sceneView.pointOfView { // カメラを取得
             arrow.position = camera.convertPosition(position, to: nil) // カメラ位置からの偏差で求めた位置をノードの位置とする
         }
         
-//        arrow.eulerAngles = SCNVector3(x:atan((Position.x - arrow.position.x)/(Position.y - arrow.position.y )),y:Float(0),z:atan((Position.z - arrow.position.z)/(Position.y -  arrow.position.y)))
+        //        arrow.eulerAngles = SCNVector3(x:atan((Position.x - arrow.position.x)/(Position.y - arrow.position.y )),y:Float(0),z:atan((Position.z - arrow.position.z)/(Position.y -  arrow.position.y)))
         
         if let material = arrow.geometry?.firstMaterial {
             material.diffuse.contents = UIImage(named: "direction")
             //            material.specular.contents = UIColor.red
         }
-        
-                let action = SCNAction.moveBy(x: CGFloat(Position.x), y:CGFloat(Position.y) , z:CGFloat(Position.z), duration:V.distance)
-                arrow.runAction(
-                    SCNAction.sequence([
-                        action,
-                        SCNAction.removeFromParentNode()
-                        ])
-                )
+        let action2 = SCNAction.rotateBy(x:CGFloat(0),y:CGFloat(atan((Position.z - arrow.position.z)/(Position.x - arrow.position.x ))),
+                                         z:CGFloat(0),
+                                         duration: 0.1)
+        let action = SCNAction.moveBy(x: CGFloat(Position.x), y:CGFloat(Position.y) , z:CGFloat(Position.z), duration:V.distance)
+        arrow.runAction(
+            SCNAction.sequence([
+                action2,
+                action,
+                SCNAction.removeFromParentNode()
+                ])
+        )
         sceneView.scene.rootNode.addChildNode(arrow)
     }
     
