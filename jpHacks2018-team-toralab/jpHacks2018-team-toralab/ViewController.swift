@@ -259,7 +259,7 @@ extension ViewController: CLLocationManagerDelegate {
             material.diffuse.contents = UIImage(named: "direction")
             //            material.specular.contents = UIColor.red
         }
-        let action2 = SCNAction.rotateBy(x:CGFloat(0),y:CGFloat(atan((Position.z - arrow.position.z)/(Position.x - arrow.position.x ))),
+        let action2 = SCNAction.rotateBy(x:CGFloat(0),y:CGFloat(atan((Position.z - arrow.position.z)/(Position.x - arrow.position.x ))/180*Float.pi),
                                          z:CGFloat(0),
                                          duration: 0.1)
         let action = SCNAction.moveBy(x: CGFloat(Position.x), y:CGFloat(Position.y) , z:CGFloat(Position.z), duration:V.distance)

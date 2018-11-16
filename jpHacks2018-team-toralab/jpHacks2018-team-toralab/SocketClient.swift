@@ -18,7 +18,7 @@ class SocketClient{
     static private var mUpdateDestinationObserver:[((CLLocationCoordinate2D)->(),String)]!=[]
     //サーバに接続する
     static func connect(){
-        mManager=SocketManager(socketURL: URL(string: "")!, config: [.log(true), .compress])
+        mManager=SocketManager(socketURL: URL(string: "https://desolate-coast-58380.herokuapp.com")!, config: [.log(true), .compress])
         mSocket=mManager.defaultSocket
         print("サーバにアクセスしています")
         mSocket.on("connected", callback: {(_,_) in
