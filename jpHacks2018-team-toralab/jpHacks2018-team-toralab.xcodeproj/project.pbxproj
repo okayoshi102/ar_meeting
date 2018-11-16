@@ -15,7 +15,6 @@
 		E51E9E24217C4E2400B3DDD3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E51E9E21217C4E2400B3DDD3 /* Main.storyboard */; };
 		E53273D32177129400E700CB /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53273D22177129400E700CB /* LocationManager.swift */; };
 		E53273D521771F3600E700CB /* MyGMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53273D421771F3600E700CB /* MyGMap.swift */; };
-		E53273D721771F6200E700CB /* apiKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53273D621771F6200E700CB /* apiKey.swift */; };
 		E53273D9217728E100E700CB /* MarkerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53273D8217728E100E700CB /* MarkerManager.swift */; };
 		E55D85462175C48800C06259 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55D85452175C48800C06259 /* AppDelegate.swift */; };
 		E55D85482175C48800C06259 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = E55D85472175C48800C06259 /* art.scnassets */; };
@@ -35,7 +34,6 @@
 		E51E9E22217C4E2400B3DDD3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		E53273D22177129400E700CB /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		E53273D421771F3600E700CB /* MyGMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGMap.swift; sourceTree = "<group>"; };
-		E53273D621771F6200E700CB /* apiKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = apiKey.swift; sourceTree = "<group>"; };
 		E53273D8217728E100E700CB /* MarkerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerManager.swift; sourceTree = "<group>"; };
 		E55D85422175C48800C06259 /* jpHacks2018-team-toralab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "jpHacks2018-team-toralab.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E55D85452175C48800C06259 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -106,7 +104,6 @@
 				E53273D22177129400E700CB /* LocationManager.swift */,
 				E53273D421771F3600E700CB /* MyGMap.swift */,
 				E53273D8217728E100E700CB /* MarkerManager.swift */,
-				E53273D621771F6200E700CB /* apiKey.swift */,
 				E573C6F02178601300FEA9E5 /* SocketClient.swift */,
 				E51E9E13217C193B00B3DDD3 /* MyGMapView.swift */,
 				E51E9E15217C29B500B3DDD3 /* vcBackup.swift */,
@@ -257,7 +254,6 @@
 			files = (
 				E51E9E16217C29B500B3DDD3 /* vcBackup.swift in Sources */,
 				E55D854A2175C48800C06259 /* ViewController.swift in Sources */,
-				E53273D721771F6200E700CB /* apiKey.swift in Sources */,
 				E53273D521771F3600E700CB /* MyGMap.swift in Sources */,
 				E573C6F12178601300FEA9E5 /* SocketClient.swift in Sources */,
 				E53273D9217728E100E700CB /* MarkerManager.swift in Sources */,
