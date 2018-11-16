@@ -23,6 +23,7 @@
 		E573C6F12178601300FEA9E5 /* SocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E573C6F02178601300FEA9E5 /* SocketClient.swift */; };
 		E598407E219E635F0062FBBB /* array2.scn in Resources */ = {isa = PBXBuildFile; fileRef = E598407D219E635F0062FBBB /* array2.scn */; };
 		E5984080219EB6130062FBBB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E598407F219EB6130062FBBB /* CoreLocation.framework */; };
+		E5984082219ED1460062FBBB /* softbank.dae in Resources */ = {isa = PBXBuildFile; fileRef = E5984081219ED1450062FBBB /* softbank.dae */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		E573C6F02178601300FEA9E5 /* SocketClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketClient.swift; sourceTree = "<group>"; };
 		E598407D219E635F0062FBBB /* array2.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = array2.scn; sourceTree = "<group>"; };
 		E598407F219EB6130062FBBB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		E5984081219ED1450062FBBB /* softbank.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = softbank.dae; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +117,7 @@
 				E51E9E15217C29B500B3DDD3 /* vcBackup.swift */,
 				E51E9E17217C29DC00B3DDD3 /* Vincenty.swift */,
 				E598407D219E635F0062FBBB /* array2.scn */,
+				E5984081219ED1450062FBBB /* softbank.dae */,
 			);
 			path = "jpHacks2018-team-toralab";
 			sourceTree = "<group>";
@@ -182,6 +185,7 @@
 			files = (
 				E51E9E23217C4E2400B3DDD3 /* LaunchScreen.storyboard in Resources */,
 				E598407E219E635F0062FBBB /* array2.scn in Resources */,
+				E5984082219ED1460062FBBB /* softbank.dae in Resources */,
 				E55D85482175C48800C06259 /* art.scnassets in Resources */,
 				E55D854F2175C48A00C06259 /* Assets.xcassets in Resources */,
 				E51E9E24217C4E2400B3DDD3 /* Main.storyboard in Resources */,

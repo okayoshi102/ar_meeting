@@ -56,8 +56,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         self.view.addSubview(label)
         
         
-        
-        nodeA = SCNNode(geometry: sphere)
+        let tSoft=SCNScene(named: "softbank.dae")
+        nodeA = tSoft!.rootNode.childNodes.first
+        nodeA.removeFromParentNode()
         nodeA.position = SCNVector3(0,0,0)
         
         sceneView.scene.rootNode.addChildNode(worldNode)
@@ -306,9 +307,9 @@ extension ViewController: CLLocationManagerDelegate {
     {
         nodeA.position = Position
         nodeA.position.y = 2.0
-        if let material = nodeA.geometry?.firstMaterial {
-            material.diffuse.contents = UIColor(hue: 0.11, saturation: 0.90, brightness: 1.00, alpha: 1.0)
-        }
+//        if let material = nodeA.geometry?.firstMaterial {
+//            material.diffuse.contents = UIColor(hue: 0.11, saturation: 0.90, brightness: 1.00, alpha: 1.0)
+//        }
 //        sceneView.scene.rootNode.addChildNode(nodeA)
         worldNode.addChildNode(nodeA)
     }
