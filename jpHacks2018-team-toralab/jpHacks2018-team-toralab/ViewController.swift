@@ -97,7 +97,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Create a session configuration
         let configuration = ARWorldTrackingConfiguration()
-        //configuration.worldAlignment = .gravityAndHeading
+//        configuration.worldAlignment = .gravityAndHeading
         
         //        func session(_ session: ARSession, didFailWithError error: Error) {
         //
@@ -247,11 +247,15 @@ extension ViewController: CLLocationManagerDelegate {
     func directionArrow(Position:SCNVector3)
     {
         arrow = SCNNode(geometry: plane)
-        arrow.eulerAngles = SCNVector3(-90 * (Float.pi / 180), -90 * (Float.pi / 180), 0)
+        arrow.scale=SCNVector3(2, 2, 2)
+        arrow.eulerAngles = SCNVector3(-90 * (Float.pi / 180),0, 0)
+        let tNode=SCNNode()
+        tNode.addChildNode(arrow)
         let position = SCNVector3(x: 0, y: -0.3, z: -1) // 偏差のベクトルを生成する
         if let camera = sceneView.pointOfView { // カメラを取得
-            arrow.position = camera.convertPosition(position, to: nil) // カメラ位置からの偏差で求めた位置をノードの位置とする
+            tNode.position = camera.convertPosition(position, to: nil) // カメラ位置からの偏差で求めた位置をノードの位置とする
         }
+        print(atan((-Position.z + tNode.position.z)/(Position.x - tNode.position.x )))
         
         //        arrow.eulerAngles = SCNVector3(x:atan((Position.x - arrow.position.x)/(Position.y - arrow.position.y )),y:Float(0),z:atan((Position.z - arrow.position.z)/(Position.y -  arrow.position.y)))
         
@@ -259,18 +263,18 @@ extension ViewController: CLLocationManagerDelegate {
             material.diffuse.contents = UIImage(named: "direction")
             //            material.specular.contents = UIColor.red
         }
-        let action2 = SCNAction.rotateBy(x:CGFloat(0),y:CGFloat(atan((Position.z - arrow.position.z)/(Position.x - arrow.position.x ))/180*Float.pi),
+        let action2 = SCNAction.rotateTo(x:CGFloat(0),y:CGFloat(atan2f(-Position.z + tNode.worldPosition.z,Position.x - tNode.worldPosition.x )),
                                          z:CGFloat(0),
                                          duration: 0.1)
         let action = SCNAction.moveBy(x: CGFloat(Position.x), y:CGFloat(Position.y) , z:CGFloat(Position.z), duration:V.distance)
-        arrow.runAction(
+        tNode.runAction(
             SCNAction.sequence([
                 action2,
                 action,
                 SCNAction.removeFromParentNode()
                 ])
         )
-        sceneView.scene.rootNode.addChildNode(arrow)
+        sceneView.scene.rootNode.addChildNode(tNode)
     }
     
     //目的地に球を表示する

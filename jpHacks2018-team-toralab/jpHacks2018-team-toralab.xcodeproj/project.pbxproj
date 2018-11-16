@@ -21,6 +21,7 @@
 		E55D854A2175C48800C06259 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55D85492175C48800C06259 /* ViewController.swift */; };
 		E55D854F2175C48A00C06259 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E55D854E2175C48A00C06259 /* Assets.xcassets */; };
 		E573C6F12178601300FEA9E5 /* SocketClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E573C6F02178601300FEA9E5 /* SocketClient.swift */; };
+		E598407E219E635F0062FBBB /* array2.scn in Resources */ = {isa = PBXBuildFile; fileRef = E598407D219E635F0062FBBB /* array2.scn */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		E55D854E2175C48A00C06259 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E55D85532175C48A00C06259 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E573C6F02178601300FEA9E5 /* SocketClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketClient.swift; sourceTree = "<group>"; };
+		E598407D219E635F0062FBBB /* array2.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = array2.scn; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 				E51E9E13217C193B00B3DDD3 /* MyGMapView.swift */,
 				E51E9E15217C29B500B3DDD3 /* vcBackup.swift */,
 				E51E9E17217C29DC00B3DDD3 /* Vincenty.swift */,
+				E598407D219E635F0062FBBB /* array2.scn */,
 			);
 			path = "jpHacks2018-team-toralab";
 			sourceTree = "<group>";
@@ -174,6 +177,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E51E9E23217C4E2400B3DDD3 /* LaunchScreen.storyboard in Resources */,
+				E598407E219E635F0062FBBB /* array2.scn in Resources */,
 				E55D85482175C48800C06259 /* art.scnassets in Resources */,
 				E55D854F2175C48A00C06259 /* Assets.xcassets in Resources */,
 				E51E9E24217C4E2400B3DDD3 /* Main.storyboard in Resources */,
