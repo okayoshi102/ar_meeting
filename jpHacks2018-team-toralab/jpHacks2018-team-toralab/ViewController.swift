@@ -23,7 +23,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var nodeA :SCNNode!
     var arrow :SCNNode!
     
-    
+    var worldNode:SCNNode=SCNNode()
     //デバック用　名古屋駅の位置情報
     var nagoya_station:CLLocation!
     var location:CLLocation!
@@ -41,7 +41,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Create a new scene
         
         
-        
+//        sceneView.debugOptions = [ARSCNDebugOptions.showWorldOrigin]
         // Set the scene to the view
         
         locationManager = CLLocationManager() // インスタンスの生成
@@ -60,6 +60,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         nodeA = SCNNode(geometry: sphere)
         nodeA.position = SCNVector3(0,0,0)
         
+        sceneView.scene.rootNode.addChildNode(worldNode)
         //        sceneView.scene.rootNode.addChildNode(nodeA)
         
         
@@ -89,6 +90,19 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             self.nagoya_station = CLLocation(latitude: aLocation.latitude, longitude: aLocation.longitude)
             self.V = Vincentry(destination:self.nagoya_station)
         }, "updateDestination")
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager = CLLocationManager()
+            locationManager.delegate = self
+            
+            // 何度動いたら更新するか（デフォルトは1度）
+            locationManager.headingFilter = kCLHeadingFilterNone
+            
+            // デバイスのどの向きを北とするか（デフォルトは画面上部）
+            locationManager.headingOrientation = .portrait
+            
+            locationManager.startUpdatingHeading()
+        }
     }
     
     
@@ -97,6 +111,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Create a session configuration
         let configuration = ARWorldTrackingConfiguration()
+        //フリーズする↓
 //        configuration.worldAlignment = .gravityAndHeading
         
         //        func session(_ session: ARSession, didFailWithError error: Error) {
@@ -188,6 +203,10 @@ extension ViewController: CLLocationManagerDelegate {
             //位置情報取得の開始処理
             locationManager.distanceFilter = 1.0
             locationManager.startUpdatingLocation()
+            //向きじ情報取得開始
+            locationManager.headingFilter = kCLHeadingFilterNone
+            locationManager.headingOrientation = .portrait
+            locationManager.startUpdatingHeading()
             break
         }
     }
@@ -223,6 +242,11 @@ extension ViewController: CLLocationManagerDelegate {
             
         }
     }
+    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+        locationManager.stopUpdatingHeading()
+        let tDirection:CGFloat=CGFloat(newHeading.magneticHeading)
+        worldNode.rotation=SCNVector4(0,1,0,(tDirection/180)*CGFloat.pi)
+    }
     //目的地までものを飛ばす
     func createPyramid(Position:SCNVector3)
     {
@@ -255,7 +279,6 @@ extension ViewController: CLLocationManagerDelegate {
         if let camera = sceneView.pointOfView { // カメラを取得
             tNode.position = camera.convertPosition(position, to: nil) // カメラ位置からの偏差で求めた位置をノードの位置とする
         }
-        print(atan((-Position.z + tNode.position.z)/(Position.x - tNode.position.x )))
         
         //        arrow.eulerAngles = SCNVector3(x:atan((Position.x - arrow.position.x)/(Position.y - arrow.position.y )),y:Float(0),z:atan((Position.z - arrow.position.z)/(Position.y -  arrow.position.y)))
         
@@ -274,7 +297,8 @@ extension ViewController: CLLocationManagerDelegate {
                 SCNAction.removeFromParentNode()
                 ])
         )
-        sceneView.scene.rootNode.addChildNode(tNode)
+        worldNode.addChildNode(tNode)
+//        sceneView.scene.rootNode.addChildNode(tNode)
     }
     
     //目的地に球を表示する
@@ -285,7 +309,8 @@ extension ViewController: CLLocationManagerDelegate {
         if let material = nodeA.geometry?.firstMaterial {
             material.diffuse.contents = UIColor(hue: 0.11, saturation: 0.90, brightness: 1.00, alpha: 1.0)
         }
-        sceneView.scene.rootNode.addChildNode(nodeA)
+//        sceneView.scene.rootNode.addChildNode(nodeA)
+        worldNode.addChildNode(nodeA)
     }
     
 }
