@@ -43,7 +43,7 @@ class BotServer{
 			return Promise.resolve(null);
 		}
 		console.log(event.message.text);
-		if(event.message.text != "！ついたで" && event.message.text != "!ついたで"){
+		if(event.message.text != ".gt" && event.message.text != "．gt"){
 			// return BotServer.client.replyMessage(event.replyToken, {
 			// 	type: 'text',
 			// 	text: event.message.text
@@ -53,30 +53,22 @@ class BotServer{
 		//キーワードが送信された
 		return BotServer.client.replyMessage(event.replyToken, {
 			type: 'text',
-			text: "どこおるん?",
+			text: "集まりますか？",
 			"quickReply": {
 				"items": [
 					{
 						"type": "action",
 						"action": {
 							"type":"location",
-							"label":"ここやで"
+							"label":"はい"
 						}
 					},
 					{
 						"type": "message",
 						"action": {
 							"type": "message",
-							"label": "内緒",
-							"text": "内緒"
-						}
-					},
-					{
-						"type": "message",
-						"action": {
-							"type": "message",
-							"label": "てへぺろ",
-							"text": "てへぺろ"
+							"label": "いやです",
+							"text": "いやです"
 						}
 					}
 				]
