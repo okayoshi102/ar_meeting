@@ -24,6 +24,15 @@ extension Double {
         return  180.0 * self / Double.pi
     }
 }
+extension SCNVector3{
+    //２点間の距離
+    static func distance(_ a:SCNVector3,_ b:SCNVector3)->Float{
+        let tX=(a.x-b.x)*(a.x-b.x)
+        let tY=(a.y-b.y)*(a.y-b.y)
+        let tZ=(a.z-b.z)*(a.z-b.z)
+        return sqrt(tX+tY+tZ)
+    }
+}
 class Vincentry{
     let a: Double!
     let f: Double!

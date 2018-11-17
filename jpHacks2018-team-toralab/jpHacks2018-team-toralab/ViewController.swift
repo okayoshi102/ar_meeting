@@ -40,7 +40,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Create a new scene
         
         
-        sceneView.debugOptions = [ARSCNDebugOptions.showWorldOrigin]
+//        sceneView.debugOptions = [ARSCNDebugOptions.showWorldOrigin]
         // Set the scene to the view
         
         locationManager = CLLocationManager() // インスタンスの生成
@@ -85,6 +85,24 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             self.nagoya_station = CLLocation(latitude: aLocation.latitude, longitude: aLocation.longitude)
             self.V = Vincentry(destination:self.nagoya_station)
         }, "updateDestination")
+        
+        
+        //定期的にAR空間座標を元に目的地までの距離を更新
+        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true, block: {_ in
+            if(self.nodeA.parent == nil){return}//目標地点未設定
+            let text = """
+            \(Int(floor(SCNVector3.distance(self.sceneView.pointOfView!.position, self.nodeA.position))))m
+            
+            
+            """
+            // ラベルの設定
+            let textAttributes: [NSAttributedString.Key : Any] = [
+                .foregroundColor : UIColor(hue: 0.68, saturation: 0.49, brightness: 0.60, alpha: 1.0),
+                .strokeColor : UIColor.white,
+                .strokeWidth : -4.0
+            ]
+            self.label.attributedText = NSAttributedString(string: text, attributes: textAttributes)
+        })
     }
     
     
@@ -195,10 +213,12 @@ extension ViewController: CLLocationManagerDelegate {
         var  Flag:Bool
         var Position:SCNVector3
         for location in locations {
+            print(location)
             (Position ,Flag) = V.updatemyPosition(newposition: location)
             //目的地は変更不可
             if(Flag){
                 nodeA.position = Position
+                self.destinationSphere(Position: Position)
             }
             let text = """
             \(floor(V.distance))m
@@ -216,7 +236,7 @@ extension ViewController: CLLocationManagerDelegate {
             //           self.createPyramid(Position: nodeA.position)
             self.directionArrow(Position: Position)
             //           sceneView.scene.rootNode.addChildNode(nodeA)
-            self.destinationSphere(Position: Position)
+//            self.destinationSphere(Position: Position)
             
         }
     }
