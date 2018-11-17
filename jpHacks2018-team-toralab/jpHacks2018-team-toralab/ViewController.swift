@@ -23,7 +23,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var nodeA :SCNNode!
     var arrow :SCNNode!
     
-    var worldNode:SCNNode=SCNNode()
     //デバック用　名古屋駅の位置情報
     var nagoya_station:CLLocation!
     var location:CLLocation!
@@ -41,7 +40,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Create a new scene
         
         
-//        sceneView.debugOptions = [ARSCNDebugOptions.showWorldOrigin]
+        sceneView.debugOptions = [ARSCNDebugOptions.showWorldOrigin]
         // Set the scene to the view
         
         locationManager = CLLocationManager() // インスタンスの生成
@@ -55,16 +54,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         label.font = UIFont.boldSystemFont(ofSize: 90)
         self.view.addSubview(label)
         
-        
+        //目的地を示すオブジェクト
         let tSoft=SCNScene(named: "softbank.dae")
         nodeA = tSoft!.rootNode.childNodes.first
         nodeA.removeFromParentNode()
-        nodeA.position = SCNVector3(0,0,0)
-        
-        sceneView.scene.rootNode.addChildNode(worldNode)
-        //        sceneView.scene.rootNode.addChildNode(nodeA)
-        
-        
+        nodeA.position = SCNVector3(0,0.2,0)
         
         //デバック用　名古屋駅の位置情報
         
@@ -86,34 +80,22 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         //サーバに接続
         SocketClient.connect()
-        //map表示完了後
+        //目標地点変更時の処理
         SocketClient.setUpdateDestinationObserver({aLocation in
             self.nagoya_station = CLLocation(latitude: aLocation.latitude, longitude: aLocation.longitude)
             self.V = Vincentry(destination:self.nagoya_station)
         }, "updateDestination")
-        
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager = CLLocationManager()
-            locationManager.delegate = self
-            
-            // 何度動いたら更新するか（デフォルトは1度）
-            locationManager.headingFilter = kCLHeadingFilterNone
-            
-            // デバイスのどの向きを北とするか（デフォルトは画面上部）
-            locationManager.headingOrientation = .portrait
-            
-            locationManager.startUpdatingHeading()
-        }
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         // Create a session configuration
         let configuration = ARWorldTrackingConfiguration()
-        //フリーズする↓
-//        configuration.worldAlignment = .gravityAndHeading
+        //フリーズすることがある↓(フリーズしたら再起動し、起動直後にカメラを適当に動かしまくるとなおる(?))
+        //座標軸を東西南北に合わせる
+        configuration.worldAlignment = .gravityAndHeading
+        
         
         //        func session(_ session: ARSession, didFailWithError error: Error) {
         //
@@ -140,7 +122,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Run the view's session
         sceneView.session.run(configuration)
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -204,10 +185,6 @@ extension ViewController: CLLocationManagerDelegate {
             //位置情報取得の開始処理
             locationManager.distanceFilter = 1.0
             locationManager.startUpdatingLocation()
-            //向きじ情報取得開始
-            locationManager.headingFilter = kCLHeadingFilterNone
-            locationManager.headingOrientation = .portrait
-            locationManager.startUpdatingHeading()
             break
         }
     }
@@ -242,11 +219,6 @@ extension ViewController: CLLocationManagerDelegate {
             self.destinationSphere(Position: Position)
             
         }
-    }
-    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
-        locationManager.stopUpdatingHeading()
-        let tDirection:CGFloat=CGFloat(newHeading.magneticHeading)
-        worldNode.rotation=SCNVector4(0,1,0,(tDirection/180)*CGFloat.pi)
     }
     //目的地までものを飛ばす
     func createPyramid(Position:SCNVector3)
@@ -298,20 +270,18 @@ extension ViewController: CLLocationManagerDelegate {
                 SCNAction.removeFromParentNode()
                 ])
         )
-        worldNode.addChildNode(tNode)
-//        sceneView.scene.rootNode.addChildNode(tNode)
+        sceneView.scene.rootNode.addChildNode(tNode)
     }
     
     //目的地に球を表示する
     func destinationSphere(Position:SCNVector3)
     {
         nodeA.position = Position
-        nodeA.position.y = 2.0
+//        nodeA.position.y = 2.0
 //        if let material = nodeA.geometry?.firstMaterial {
 //            material.diffuse.contents = UIColor(hue: 0.11, saturation: 0.90, brightness: 1.00, alpha: 1.0)
 //        }
-//        sceneView.scene.rootNode.addChildNode(nodeA)
-        worldNode.addChildNode(nodeA)
+        sceneView.scene.rootNode.addChildNode(nodeA)
     }
     
 }
