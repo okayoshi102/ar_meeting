@@ -23,6 +23,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var nodeA :SCNNode!
     var arrow :SCNNode!
     
+    var tPreDistance:Float!=nil
+    var tOverCount:Int=0
     //デバック用　名古屋駅の位置情報
     var nagoya_station:CLLocation!
     var location:CLLocation!
@@ -90,8 +92,16 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         //定期的にAR空間座標を元に目的地までの距離を更新
         Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true, block: {_ in
             if(self.nodeA.parent == nil){return}//目標地点未設定
+            let tDistance=SCNVector3.distance(self.sceneView.pointOfView!.position, self.nodeA.position)
+            //距離が大きく変化した場合は表示更新しない
+            if(self.tPreDistance != nil && self.tOverCount<6 && abs(self.tPreDistance-tDistance)>3){
+                self.tOverCount += 1
+                return;
+            }
+            self.tOverCount=0
+            self.tPreDistance=tDistance
             let text = """
-            \(Int(floor(SCNVector3.distance(self.sceneView.pointOfView!.position, self.nodeA.position))))m
+            \(Int(floor(tDistance)))m
             
             
             """
@@ -202,6 +212,7 @@ extension ViewController: CLLocationManagerDelegate {
             print("起動時のみ、位置情報の取得が許可されています。")
             //位置情報取得の開始処理
             locationManager.distanceFilter = 1.0
+            locationManager.activityType = .fitness
             locationManager.startUpdatingLocation()
             break
         }
@@ -279,10 +290,11 @@ extension ViewController: CLLocationManagerDelegate {
             material.diffuse.contents = UIImage(named: "direction")
             //            material.specular.contents = UIColor.red
         }
-        let action2 = SCNAction.rotateTo(x:CGFloat(0),y:CGFloat(atan2f(-Position.z + tNode.worldPosition.z,Position.x - tNode.worldPosition.x )),
+        let action2 = SCNAction.rotateTo(x:CGFloat(0),y:CGFloat(atan2f(-nodeA.position.z + tNode.worldPosition.z,nodeA.position.x - tNode.worldPosition.x )),
                                          z:CGFloat(0),
                                          duration: 0.1)
-        let action = SCNAction.moveBy(x: CGFloat(Position.x), y:CGFloat(Position.y) , z:CGFloat(Position.z), duration:V.distance)
+        let action=SCNAction.move(to: SCNVector3(CGFloat(nodeA.position.x),CGFloat(nodeA.position.y),CGFloat(nodeA.position.z)),
+                                  duration: TimeInterval(SCNVector3.distance(nodeA.position, tNode.position)))
         tNode.runAction(
             SCNAction.sequence([
                 action2,
