@@ -3,6 +3,9 @@
 [![アランデブー(ARendezvous)](logo.png)](https://www.youtube.com/watch?v=HsD1WHpUfnY&feature=youtu.be)
 
 ## 製品概要
+### 実際に動いている様子
+https://youtu.be/HsD1WHpUfnY
+
 ### 待ち合わせ ×Tech
 
 ### 背景（製品開発のきっかけ、課題等）
